@@ -117,9 +117,7 @@ router.get('/:id/comments', (req, res) => {
 
 router.post('/', (req, res) => {
     const newPost = req.body;
-    const { id } = req.params
     console.log(req.body)
-
 
     if(newPost.title && newPost.contents) {
         db.insert(newPost).then(post => {
@@ -133,6 +131,56 @@ router.post('/', (req, res) => {
         res.status(400).json({errorMessage: "Please provide title and contents for the post."})
     }
 })
+
+
+//POST   | /api/posts/:id/comments | Creates a comment for the post with the specified id using information sent inside of the `request body`.                                                                   
+//- If the _post_ with the specified `id` is not found:
+
+// - return HTTP status code `404` (Not Found).
+// - return the following JSON object: `{ message: "The post with the specified ID does not exist." }`.
+
+// - If the request body is missing the `text` property:
+
+// - cancel the request.
+// - respond with HTTP status code `400` (Bad Request).
+// - return the following JSON response: `{ errorMessage: "Please provide text for the comment." }`.
+
+// - If the information about the _comment_ is valid:
+
+// - save the new _comment_ the the database.
+// - return HTTP status code `201` (Created).
+// - return the newly created _comment_.
+
+// - If there's an error while saving the _comment_:
+// - cancel the request.
+// - respond with HTTP status code `500` (Server Error).
+// - return the following JSON object: `{ error: "There was an error while saving the comment to the database" }`.
+// - `findCommentById()`: accepts an `id` and returns the comment associated with that id.
+// - `insertComment()`: calling insertComment while passing it a `comment` object will add it to the database and return an object with the `id` of the inserted comment. The object looks like this: `{ id: 123 }`. This method will throw an error if the `post_id` field in the `comment` object does not match a valid post id in the database.
+
+
+router.post('/:id/comments', (req, res) => {
+    const { text, post_id } = req.body 
+    const { id } = req.params.id 
+
+    if(!text) {
+        res.status(400).json({errorMessage: "Please provide text for the comment."})
+
+    } else {
+        db.insertComment(req.body).then(comment => {
+            if(comment) {
+                db.findCommentById(id)
+            }
+        })
+    }
+
+})
+
+
+
+
+
+
 
 
 
