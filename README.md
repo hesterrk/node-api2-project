@@ -32,7 +32,7 @@ The `db.js` publishes the following methods:
 - `insert()`: calling insert passing it a `post` object will add it to the database and return an object with the `id` of the inserted post. The object looks like this: `{ id: 123 }`.
 - `update()`: accepts two arguments, the first is the `id` of the post to update and the second is an object with the `changes` to apply. It returns the count of updated records. If the count is 1 it means the record was updated correctly.
 - `remove()`: the remove method accepts an `id` as its first parameter and upon successfully deleting the post from the database it returns the number of records deleted.
-- `findPostComments()`: the findPostComments accepts a `postId` as its first parameter and returns all comments on the post associated with the post id.
+<!-- - `findPostComments()`: the findPostComments accepts a `postId` as its first parameter and returns all comments on the post associated with the post id. -->
 - `findCommentById()`: accepts an `id` and returns the comment associated with that id.
 - `insertComment()`: calling insertComment while passing it a `comment` object will add it to the database and return an object with the `id` of the inserted comment. The object looks like this: `{ id: 123 }`. This method will throw an error if the `post_id` field in the `comment` object does not match a valid post id in the database.
 
@@ -79,7 +79,7 @@ Configure the API to handle to the following routes:
 | POST   | /api/posts/:id/comments | Creates a comment for the post with the specified id using information sent inside of the `request body`.                                                                   |
 <!-- | GET    | /api/posts              | Returns an array of all the post objects contained in the database.                                                                                                         | -->
 <!-- | GET    | /api/posts/:id          | Returns the post object with the specified id.                                                                                                                              | -->
-| GET    | /api/posts/:id/comments | Returns an array of all the comment objects associated with the post with the specified id.                                                                                 |
+<!-- | GET    | /api/posts/:id/comments | Returns an array of all the comment objects associated with the post with the specified id.                                                                                 | -->
 | DELETE | /api/posts/:id          | Removes the post with the specified id and returns the **deleted post object**. You may need to make additional calls to the database in order to satisfy this requirement. |
 | PUT    | /api/posts/:id          | Updates the post with the specified `id` using data from the `request body`. Returns the modified document, **NOT the original**.                                           |
 
@@ -147,7 +147,7 @@ When the client makes a `POST` request to `/api/posts/:id/comments`:
   - respond with HTTP status code `500`.
   - return the following JSON object: `{ error: "The post information could not be retrieved." }`. -->
 
-When the client makes a `GET` request to `/api/posts/:id/comments`:
+<!-- When the client makes a `GET` request to `/api/posts/:id/comments`:
 
 - If the _post_ with the specified `id` is not found:
 
@@ -157,7 +157,7 @@ When the client makes a `GET` request to `/api/posts/:id/comments`:
 - If there's an error in retrieving the _comments_ from the database:
   - cancel the request.
   - respond with HTTP status code `500`.
-  - return the following JSON object: `{ error: "The comments information could not be retrieved." }`.
+  - return the following JSON object: `{ error: "The comments information could not be retrieved." }`. -->
 
 When the client makes a `DELETE` request to `/api/posts/:id`:
 

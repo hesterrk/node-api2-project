@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
 
     db.findById(id)
     .then(post => {
-        if(post) {
+        if(post.length !== 0) {
             res.status(200).json(post)
         } else {
             res.status(404).json({message: "The post with the specified ID does not exist."})
@@ -57,6 +57,42 @@ router.get('/:id', (req, res) => {
         })
     })
 })
+
+
+// GET: /api/posts/:id/comments
+//Returns an array of all the comment objects associated with the post with the specified id
+//- If the _post_ with the specified `id` is not found:
+// - return HTTP status code `404` (Not Found).
+// - return the following JSON object: `{ message: "The post with the specified ID does not exist." }`.
+
+// - If there's an error in retrieving the _comments_ from the database:
+// - cancel the request.
+// - respond with HTTP status code `500`.
+// - return the following JSON object: `{ error: "The comments information could not be retrieved." }`.
+//- `findPostComments()`: the findPostComments accepts a `postId` as its first parameter and returns all comments on the post associated with the post id.
+
+
+router.get('/:id/comments', (req, res) => {
+    const { id } = req.params
+
+    db.findPostComments(id)
+    .then((comments) => {
+        if(comments.length != 0) {
+        res.status(200).json(comments)
+        } else {
+            res.status(404).json({message: "The post with the specified ID does not exist."})
+
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({error: "The comments information could not be retrieved."})
+    })
+})
+
+
+
+
 
 
 
