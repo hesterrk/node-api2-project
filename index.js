@@ -2,9 +2,10 @@
 const express = require('express');
 
 const server = express();
+server.use(express.json());
+
 const dbRouter = require('./db-router')
 
-// server.use(express.json());
 server.use('/api/posts', dbRouter)
 
 

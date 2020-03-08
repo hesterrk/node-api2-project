@@ -29,7 +29,7 @@ The `db.js` publishes the following methods:
 
 <!-- - `find()`: calling find returns a promise that resolves to an array of all the `posts` contained in the database. -->
 <!-- - `findById()`: this method expects an `id` as it's only parameter and returns the post corresponding to the `id` provided or an empty array if no post with that `id` is found. -->
-- `insert()`: calling insert passing it a `post` object will add it to the database and return an object with the `id` of the inserted post. The object looks like this: `{ id: 123 }`.
+<!-- - `insert()`: calling insert passing it a `post` object will add it to the database and return an object with the `id` of the inserted post. The object looks like this: `{ id: 123 }`. -->
 - `update()`: accepts two arguments, the first is the `id` of the post to update and the second is an object with the `changes` to apply. It returns the count of updated records. If the count is 1 it means the record was updated correctly.
 <!-- - `remove()`: the remove method accepts an `id` as its first parameter and upon successfully deleting the post from the database it returns the number of records deleted. -->
 <!-- - `findPostComments()`: the findPostComments accepts a `postId` as its first parameter and returns all comments on the post associated with the post id. -->
@@ -75,7 +75,7 @@ Configure the API to handle to the following routes:
 
 | Method | Endpoint                | Description                                                                                                                                                                 |
 | ------ | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| POST   | /api/posts              | Creates a post using the information sent inside the `request body`.                                                                                                        |
+<!-- | POST   | /api/posts              | Creates a post using the information sent inside the `request body`.                                                                                                        | -->
 | POST   | /api/posts/:id/comments | Creates a comment for the post with the specified id using information sent inside of the `request body`.                                                                   |
 <!-- | GET    | /api/posts              | Returns an array of all the post objects contained in the database.                                                                                                         | -->
 <!-- | GET    | /api/posts/:id          | Returns the post object with the specified id.                                                                                                                              | -->
@@ -85,7 +85,7 @@ Configure the API to handle to the following routes:
 
 #### Endpoint Specifications
 
-When the client makes a `POST` request to `/api/posts`:
+<!-- When the client makes a `POST` request to `/api/posts`:
 
 - If the request body is missing the `title` or `contents` property:
 
@@ -102,7 +102,7 @@ When the client makes a `POST` request to `/api/posts`:
 - If there's an error while saving the _post_:
   - cancel the request.
   - respond with HTTP status code `500` (Server Error).
-  - return the following JSON object: `{ error: "There was an error while saving the post to the database" }`.
+  - return the following JSON object: `{ error: "There was an error while saving the post to the database" }`. -->
 
 When the client makes a `POST` request to `/api/posts/:id/comments`:
 
