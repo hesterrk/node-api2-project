@@ -77,7 +77,7 @@ router.get('/:id/comments', (req, res) => {
 
     db.findPostComments(id)
     .then((comments) => {
-        if(comments.length != 0) {
+        if(comments.length !== 0) {
         res.status(200).json(comments)
         } else {
             res.status(404).json({message: "The post with the specified ID does not exist."})
@@ -91,7 +91,39 @@ router.get('/:id/comments', (req, res) => {
 })
 
 
+//DELETE | /api/posts/:id  --> Removes the post with the specified id and returns the **deleted post object**. You may need to make additional calls to the database in order to satisfy this requirement. 
+//- `remove()`: the remove method accepts an `id` as its first parameter and upon successfully deleting the post from the database it returns the number of records deleted.
 
+//- If the _post_ with the specified `id` is not found:
+// - return HTTP status code `404` (Not Found).
+// - return the following JSON object: `{ message: "The post with the specified ID does not exist." }`.
+
+// - If there's an error in removing the _post_ from the database:
+// - cancel the request.
+// - respond with HTTP status code `500`.
+// - return the following JSON object: `{ error: "The post could not be removed" }`.
+
+router.delete('/:id', (req, res) => {
+    const { id } = req.params
+
+    db.remove(id)
+    .then(post => {
+        if(post) {
+            res.status(200).json(post)
+
+        } else {
+            res.status(404).json({message: "The post with the specified ID does not exist." })
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({
+            error: "The post could not be removed" 
+        });
+      });
+})
+
+//COME BACK
 
 
 
