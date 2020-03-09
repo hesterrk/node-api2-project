@@ -163,6 +163,44 @@ router.post("/", (req, res) => {
 // - return the following JSON object: `{ error: "There was an error while saving the comment to the database" }`.
 // - `insertComment()`: calling insertComment while passing it a `comment` object will add it to the database and return an object with the `id` of the inserted comment. The object looks like this: `{ id: 123 }`. This method will throw an error if the `post_id` field in the `comment` object does not match a valid post id in the database.
 
+// router.post("/:id/comments", (req, res) => {
+//   const { id } = req.params;
+
+//   if (!req.body.text) {
+//     res
+//       .status(400)
+//       .json({ errorMessage: "Please provide text for the comment." });
+//   } else {
+//     db.findById(id)
+//       .then(comment => {
+//         if (comment) {
+//           return db
+//             .insertComment({ text: req.body.text, post_id: id })
+//             .then(comment => {
+//               res.status(201).json(comment);
+//             })
+//             .catch(err => {
+//               console.log(err);
+//               res
+//                 .status(404)
+//                 .json({
+//                   message: "The post with the specified ID does not exist."
+//                 });
+//             });
+//         }
+//       })
+//       .catch(err => {
+//         console.log(err);
+//         res
+//           .status(500)
+//           .json({
+//             error: "There was an error while saving the comment to the database"
+//           });
+//       });
+//   }
+// });
+
+
 router.post("/:id/comments", (req, res) => {
   const { id } = req.params;
 
@@ -176,9 +214,14 @@ router.post("/:id/comments", (req, res) => {
         if (comment) {
           return db
             .insertComment({ text: req.body.text, post_id: id })
-            .then(comment => {
-              res.status(201).json(comment);
+            .then(({id}) => {
+              db.findCommentById(id)
+              .then(comment => {
+                console.log(comment)
+                res.status(201).json(comment);
+              })
             })
+            
             .catch(err => {
               console.log(err);
               res
@@ -199,6 +242,11 @@ router.post("/:id/comments", (req, res) => {
       });
   }
 });
+
+
+
+
+
 
 //DELETE | /api/posts/:id  --> Removes the post with the specified id and returns the **deleted post object**. You may need to make additional calls to the database in order to satisfy this requirement.
 //- `remove()`: the remove method accepts an `id` as its first parameter and upon successfully deleting the post from the database it returns the number of records deleted.
