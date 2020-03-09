@@ -30,7 +30,7 @@ The `db.js` publishes the following methods:
 <!-- - `find()`: calling find returns a promise that resolves to an array of all the `posts` contained in the database. -->
 <!-- - `findById()`: this method expects an `id` as it's only parameter and returns the post corresponding to the `id` provided or an empty array if no post with that `id` is found. -->
 <!-- - `insert()`: calling insert passing it a `post` object will add it to the database and return an object with the `id` of the inserted post. The object looks like this: `{ id: 123 }`. -->
-- `update()`: accepts two arguments, the first is the `id` of the post to update and the second is an object with the `changes` to apply. It returns the count of updated records. If the count is 1 it means the record was updated correctly.
+<!-- - `update()`: accepts two arguments, the first is the `id` of the post to update and the second is an object with the `changes` to apply. It returns the count of updated records. If the count is 1 it means the record was updated correctly. -->
 <!-- - `remove()`: the remove method accepts an `id` as its first parameter and upon successfully deleting the post from the database it returns the number of records deleted. -->
 <!-- - `findPostComments()`: the findPostComments accepts a `postId` as its first parameter and returns all comments on the post associated with the post id. -->
 - `findCommentById()`: accepts an `id` and returns the comment associated with that id.
@@ -81,7 +81,7 @@ Configure the API to handle to the following routes:
 <!-- | GET    | /api/posts/:id          | Returns the post object with the specified id.                                                                                                                              | -->
 <!-- | GET    | /api/posts/:id/comments | Returns an array of all the comment objects associated with the post with the specified id.                                                                                 | -->
 <!-- | DELETE | /api/posts/:id          | Removes the post with the specified id and returns the **deleted post object**. You may need to make additional calls to the database in order to satisfy this requirement. | -->
-| PUT    | /api/posts/:id          | Updates the post with the specified `id` using data from the `request body`. Returns the modified document, **NOT the original**.                                           |
+<!-- | PUT    | /api/posts/:id          | Updates the post with the specified `id` using data from the `request body`. Returns the modified document, **NOT the original**.                                           | -->
 
 #### Endpoint Specifications
 
@@ -173,7 +173,7 @@ Configure the API to handle to the following routes:
 
 When the client makes a `PUT` request to `/api/posts/:id`:
 
-- If the _post_ with the specified `id` is not found:
+<!-- - If the _post_ with the specified `id` is not found:
 
   - return HTTP status code `404` (Not Found).
   - return the following JSON object: `{ message: "The post with the specified ID does not exist." }`.
@@ -194,7 +194,7 @@ When the client makes a `PUT` request to `/api/posts/:id`:
 
   - update the post document in the database using the new information sent in the `request body`.
   - return HTTP status code `200` (OK).
-  - return the newly updated _post_.
+  - return the newly updated _post_. -->
 
 ## Stretch Problems
 

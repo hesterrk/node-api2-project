@@ -184,30 +184,9 @@ router.post('/:id/comments', (req, res) => {
         })
 
 
-
-        // const newText = {...req.body, post_id: id}
-        // db.insertComment(newText).then(comment => {
-        //     if(comment) {
-        //         db.findCommentById(id).then(comment => {
-        //             res.status(201).json(comment)
-        //         })
-        //     } else {
-        //         res.status(404).json({message: "The post with the specified ID does not exist."})
-        //     }
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        //     res.status(500).json({error: "There was an error while saving the comment to the database"})
-        // })
     }
 
 })
-
-
-
-
-
-
 
 
 
@@ -243,7 +222,55 @@ router.delete('/:id', (req, res) => {
       });
 })
 
-//COME BACK
+
+//| PUT   -->  /api/posts/:id   -->  Updates the post with the specified `id` using data from the `request body`. Returns the modified document, **NOT the original**.                                           
+// - If the _post_ with the specified `id` is not found:
+
+//   - return HTTP status code `404` (Not Found).
+//   - return the following JSON object: `{ message: "The post with the specified ID does not exist." }`.
+
+// - If the request body is missing the `title` or `contents` property:
+
+//   - cancel the request.
+//   - respond with HTTP status code `400` (Bad Request).
+//   - return the following JSON response: `{ errorMessage: "Please provide title and contents for the post." }`.
+
+// - If there's an error when updating the _post_:
+
+//   - cancel the request.
+//   - respond with HTTP status code `500`.
+//   - return the following JSON object: `{ error: "The post information could not be modified." }`.
+
+// - If the post is found and the new information is valid:
+
+//   - update the post document in the database using the new information sent in the `request body`.
+//   - return HTTP status code `200` (OK).
+//   - return the newly updated _post_.
+//- `update()`: accepts two arguments, the first is the `id` of the post to update and the second is an object with the `changes` to apply. It returns the count of updated records. If the count is 1 it means the record was updated correctly.
+
+
+router.put('/:id', (req, res) => {
+    const changes = req.body
+    const { id } = req.params
+   
+    if(changes.title && changes.contents) {
+    db.update(id, changes)
+    .then(post => {
+        if(post) {
+            res.status(200).json(post)
+        } else {
+            res.status(404).json({message: "The post with the specified ID does not exist."})
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        res.status(500).json({error: "The post information could not be modified."})
+    })
+
+} else {
+    res.status(400).json({errorMessage: "Please provide title and contents for the post."})
+}
+})
 
 
 
