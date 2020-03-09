@@ -155,23 +155,50 @@ router.post('/', (req, res) => {
 // - cancel the request.
 // - respond with HTTP status code `500` (Server Error).
 // - return the following JSON object: `{ error: "There was an error while saving the comment to the database" }`.
-// - `findCommentById()`: accepts an `id` and returns the comment associated with that id.
 // - `insertComment()`: calling insertComment while passing it a `comment` object will add it to the database and return an object with the `id` of the inserted comment. The object looks like this: `{ id: 123 }`. This method will throw an error if the `post_id` field in the `comment` object does not match a valid post id in the database.
 
 
 router.post('/:id/comments', (req, res) => {
-    const { text, post_id } = req.body 
-    const { id } = req.params.id 
+    const { id } = req.params 
+    
 
-    if(!text) {
+    if(!req.body.text) {
         res.status(400).json({errorMessage: "Please provide text for the comment."})
 
     } else {
-        db.insertComment(req.body).then(comment => {
+        db.findById(id).then((comment) => {
             if(comment) {
-                db.findCommentById(id)
+               return db.insertComment({text: req.body.text, post_id: id}
+                ).then(comment => {
+                    res.status(201).json(comment)
+                })
+                .catch(err => {
+                    console.log(err)
+                    res.status(404).json({message: "The post with the specified ID does not exist."})
+                })
             }
         })
+        .catch(err => {
+            console.log(err);
+                    res.status(500).json({error: "There was an error while saving the comment to the database"})
+        })
+
+
+
+        // const newText = {...req.body, post_id: id}
+        // db.insertComment(newText).then(comment => {
+        //     if(comment) {
+        //         db.findCommentById(id).then(comment => {
+        //             res.status(201).json(comment)
+        //         })
+        //     } else {
+        //         res.status(404).json({message: "The post with the specified ID does not exist."})
+        //     }
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        //     res.status(500).json({error: "There was an error while saving the comment to the database"})
+        // })
     }
 
 })
