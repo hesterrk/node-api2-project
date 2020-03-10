@@ -214,6 +214,7 @@ router.post("/:id/comments", (req, res) => {
         if (comment) {
           return db
             .insertComment({ text: req.body.text, post_id: id })
+            //destructured the id from the returned object from above so i can return the single comment i created 
             .then(({id}) => {
               db.findCommentById(id)
               .then(comment => {
