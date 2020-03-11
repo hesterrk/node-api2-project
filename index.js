@@ -12,7 +12,7 @@ server.use('/api/posts', dbRouter)
 
 
 server.get('/', (req, res) => {
-res.status(200).json({ message: process.env.SECRET_MESSAGE  })
+res.status(200).json({ message: process.env.SECRET_MESSAGE || "Welcome" })
 })
 console.log(process.env.SECRET_MESSAGE);
 
