@@ -12,7 +12,7 @@ server.use('/api/posts', dbRouter)
 
 
 server.get('/', (req, res) => {
-res.status(200).json({ message: process.env.SECRET_MESSAGE || "working as should" })
+res.status(200).json({ message: process.env.SECRET_MESSAGE  })
 })
 console.log(process.env.SECRET_MESSAGE);
 
@@ -23,7 +23,7 @@ console.log(process.env.SECRET_MESSAGE);
 // console.log(`Server stated at ${port}`);
 // });
 
-const port = process.env.PORT;
+const port = process.env.PORT || 4000;
 
 server.listen(port, () => {
 console.log(`Server stated at ${port}`);
