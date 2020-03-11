@@ -16,7 +16,13 @@ res.send("working as should")
 })
 
 
-const port = 4000;
+// const port = 4000;
+
+// server.listen(port, () => {
+// console.log(`Server stated at ${port}`);
+// });
+
+const port = process.env.PORT || 4000;
 
 server.listen(port, () => {
 console.log(`Server stated at ${port}`);
