@@ -12,7 +12,7 @@ server.use('/api/posts', dbRouter)
 
 
 server.get('/', (req, res) => {
-res.send("working as should")
+res.status(200).json({ message: process.env.SECRET_MESSAGE || "working as should" })
 })
 
 
